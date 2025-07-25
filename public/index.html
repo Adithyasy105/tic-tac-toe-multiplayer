@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multiplayer Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+  <div class="container" id="home">
+    <h1>Tic Tac Toe</h1>
+    <button onclick="selectMode('pvp')">Play PvP</button>
+    <button onclick="selectMode('computer')">Play vs Computer</button>
+  </div>
+
+  <div class="form-container hidden" id="form">
+    <h2>Enter Player Info</h2>
+    <form id="playerForm">
+      <input type="text" id="playerName" placeholder="Name" required />
+      <input type="number" id="playerAge" placeholder="Age" required />
+      <select id="playerGender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <button type="submit">Start</button>
+    </form>
+  </div>
+
+  <div class="game hidden" id="game">
+    <div class="info-bar" id="infoBar"></div>
+    <div class="board" id="board"></div>
+
+    <div id="result" class="hidden">
+      <h2 id="winnerText">Winner</h2>
+      <p id="countdownText">You have 10 seconds to choose...</p>
+      <div class="result-buttons">
+        <button onclick="playAgain()">Play Again</button>
+        <button onclick="leaveGame()">Leave</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
