@@ -206,8 +206,20 @@ select:focus {
     gap: 10px;
   }
 
-  button {
+  #result button {
     width: 100%;
-    margin: 10px 0;
+    max-width: 200px;
+    margin: 8px auto;
+    display: block;
+    font-size: 16px;
   }
+
+  #result {
+  padding: 15px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
 }
