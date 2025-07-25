@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io("https://tic-tac-toe-multiplayer-lt8o.onrender.com");
 
 socket.on("opponentLeft", () => {
   alert("Opponent left. You'll be returned to the home screen.");
