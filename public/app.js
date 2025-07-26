@@ -155,13 +155,82 @@ function handleMove(index) {
 }
 
 function computerMove() {
-  const empty = board.map((v, i) => v === null ? i : null).filter(i => i !== null);
-  const move = empty[Math.floor(Math.random() * empty.length)];
-  board[move] = "O";
-  currentTurn = "X";
+  let bestScore = -Infinity;
+  let move;
+
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === null) {
+      board[i] = 'O'; // Computer is always 'O'
+      let score = minimax(board, 0, false);
+      board[i] = null;
+
+      if (score > bestScore) {
+        bestScore = score;
+        move = i;
+      }
+    }
+  }
+
+  board[move] = 'O';
+  currentTurn = 'X';
   renderBoard();
   checkGameState();
 }
+
+function minimax(newBoard, depth, isMaximizing) {
+  const winner = getWinner(newBoard);
+  if (winner !== null) {
+    const scores = {
+      X: -10,
+      O: 10,
+      draw: 0
+    };
+    return scores[winner];
+  }
+
+  if (isMaximizing) {
+    let bestScore = -Infinity;
+    for (let i = 0; i < newBoard.length; i++) {
+      if (newBoard[i] === null) {
+        newBoard[i] = 'O';
+        let score = minimax(newBoard, depth + 1, false);
+        newBoard[i] = null;
+        bestScore = Math.max(score, bestScore);
+      }
+    }
+    return bestScore;
+  } else {
+    let bestScore = Infinity;
+    for (let i = 0; i < newBoard.length; i++) {
+      if (newBoard[i] === null) {
+        newBoard[i] = 'X';
+        let score = minimax(newBoard, depth + 1, true);
+        newBoard[i] = null;
+        bestScore = Math.min(score, bestScore);
+      }
+    }
+    return bestScore;
+  }
+}
+
+function getWinner(b) {
+  const winCombos = [
+    [0,1,2], [3,4,5], [6,7,8],
+    [0,3,6], [1,4,7], [2,5,8],
+    [0,4,8], [2,4,6]
+  ];
+
+  for (let [a, b1, c] of winCombos) {
+    if (b[a] && b[a] === b[b1] && b[a] === b[c]) {
+      return b[a]; // 'X' or 'O'
+    }
+  }
+
+  if (!b.includes(null)) return "draw";
+
+  return null;
+}
+
 
 function checkGameState() {
   const winCombos = [
